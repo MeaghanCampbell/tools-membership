@@ -1,5 +1,6 @@
 export default function Page() {
   return (
-      <p>Hello from Dashboard</p>
+      <h1 className="text-2xl font-extrabold">Welcome To The Tools App!</h1>
   )
 }
+

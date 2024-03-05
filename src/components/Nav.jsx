@@ -1,22 +1,21 @@
 'use client'
-import { HomeIcon } from '@heroicons/react/24/outline'
-import { useRouter } from 'next/navigation'
+
+import { HomeIcon, ArrowPathIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 export default function Nav() {
 
-    const router = useRouter()
-
-    // need to write function to switch the current booleans
-  
     const navigation = [
-      {name: 'Dashboard', href: '/', icon: HomeIcon, current:true},
-      {name: 'Sentence Reverse', href: '/sentence-reverse', icon: HomeIcon, current:false}
+        {name: 'Dashboard', href: '/', icon: HomeIcon, active: true},
+        {name: 'Sentence Reverse', href: '/sentence-reverse', icon: ArrowPathIcon, active: false}
     ]
-    
-    function classNames(...classes) {
-      return classes.filter(Boolean).join(' ')
-    }
+
+    const pathname = usePathname()
+
+    navigation.forEach((item) => { item.href === pathname ? item.active = true : item.active = false });
+
+    function classNames(...classes) { return classes.filter(Boolean).join(' ') }
 
     return (
       <nav>
@@ -28,7 +27,7 @@ export default function Nav() {
                               <Link 
                                   href={item.href}
                                   className={classNames(
-                                    item.current ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800',
+                                    item.active ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800',
                                     'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                                   )}
                               >
