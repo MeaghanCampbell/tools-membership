@@ -1,5 +1,4 @@
 import "@/styles/globals.css";
-import Link from 'next/link'
 import Nav from '@/components/Nav'
 
 
