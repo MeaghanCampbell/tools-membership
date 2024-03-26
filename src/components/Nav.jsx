@@ -1,6 +1,6 @@
 'use client'
 
-import { HomeIcon, ArrowPathIcon, ClockIcon, CurrencyDollarIcon } from '@heroicons/react/24/outline'
+import { HomeIcon, ArrowPathIcon, ClockIcon, CurrencyDollarIcon, BoltIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -11,6 +11,7 @@ export default function Nav() {
         {name: 'Sentence Reverse', href: '/sentence-reverse', icon: ArrowPathIcon, active: false},
         {name: 'Countdown Timer', href: '/countdown-timer', icon: ClockIcon, active: false},
         {name: 'Budget Tracker', href: '/budget-tracker', icon: CurrencyDollarIcon, active: false},
+        {name: 'Randomizer', href: '/randomizer', icon: BoltIcon, active: false},
     ]
 
     const pathname = usePathname()
