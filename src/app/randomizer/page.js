@@ -15,9 +15,10 @@ export default function Page() {
         setError(null); // Clear error when user starts typing
     }
 
-    const handleButtonClick = () => {
+    const handleButtonClick = (event) => {
+        event.preventDefault();
         if (inputName.trim() === '') {
-            setError('Please enter a name.'); // Set error if inputName is empty
+            setError('Please enter a name.');
         } else {
             setNames([...names, inputName]);
             setInputName('');
@@ -40,7 +41,7 @@ export default function Page() {
         <div className="text-lg max-w-md">
             <h1 className="text-2xl font-extrabold mb-4">Welcome To The Randomizer!</h1>
             <p className="mb-2">Please input one name at a time and click randomize to choose a winner.</p>
-             <div className="flex items-center">
+             <form onSubmit={handleButtonClick} className="flex items-center">
                 <input 
                     className="border border-gray-800 rounded-md p-2 flex-grow mr-1" 
                     type="text" 
@@ -49,11 +50,11 @@ export default function Page() {
                 />
                 <button 
                     className="bg-fuchsia-500 transition border border-fuchsia-500 hover:bg-fuchsia-600 text-white rounded-md py-2.5 px-4 text-xl font-bold tracking-wide"
-                    onClick={handleButtonClick}
+                    type="submit"
                 >
                     <ArrowRightIcon className="h-6 w-6 text-white" />
                 </button>
-            </div>
+            </form>
             {error && <p className="text-red-500">{error}</p>}
             <ul className="mt-2">
                 {names.map((name, index) => <li key={index}>{name}</li>)}
@@ -62,7 +63,7 @@ export default function Page() {
                 <button onClick={randomize} className="border-2 border-fuchsia-500 hover:border-fuchsia-600 bg-fuchsia-500 transition hover:bg-fuchsia-600 text-white rounded-md py-2 px-4 text-xl font-bold tracking-wide mt-2">Choose a Winner</button>
                 <button onClick={clear} className="border-2 border-fuchsia-500 transition hover:border-fuchsia-600 hover:text-fuchsia-600 text-fuchsia-500 rounded-md py-2 px-4 text-xl font-bold tracking-wide mt-2">Clear Names</button>
             </div>
-            <p className="pt-4 font-bold">{randomName}</p>
+            <p className="pt-4 font-bold text-3xl">{randomName}</p>
         </div>
     )
 }
