@@ -2,20 +2,35 @@
 
 import { useState, useEffect } from 'react';
 import CustomSwitch from '../../components/CustomSwitch'
-import { RocketLaunchIcon } from '@heroicons/react/24/outline'
-
 
 export default function Page() { 
 
     const [hrs, setHrs] = useState(false)
     const [min, setMin] = useState(false)
     const [sec, setSec] = useState(false)
-    
+    const [error, setError] = useState(null);
+    const [futureDate, setFutureDate] = useState('')
+    const [timeLeft, setTimeLeft] = useState({})
+
     useEffect(() => {
         const timer = setInterval(() => {
-                const now = new Date()
+            const now = new Date()
+            const difference = new Date(futureDate) - now
+            const timeLeft = {
+                hours: Math.floor((difference / (1000 * 60 * 60))),
+                minutes: Math.floor((difference / 1000 / 60) % 60),
+                seconds: Math.floor((difference / 1000) % 60)
+            }
+
+            setTimeLeft(timeLeft)
         },1000)
-    })
+
+        return () => clearInterval(timer)
+    }, [futureDate])
+
+    const generateTime = (event) => {
+        setFutureDate(event.target.value);
+    }
 
     return(
         <section>
@@ -35,11 +50,18 @@ export default function Page() {
                 </div>
             </div>
             <div className="mb-6">
-                <input type="datetime-local" className="border border-gray-800 rounded-md p-2 w-full" />
-                <button className="bg-fuchsia-500 transition hover:bg-fuchsia-600 text-white rounded-md py-2 px-4 text-xl font-bold tracking-wide mt-4">Generate Timer</button>
-            </div>
-            <div className='text-5xl font-bold mt-6'>
-                <span></span>
+                <input 
+                    type="datetime-local" 
+                    className="border border-gray-800 rounded-md p-2 w-full"
+                    value={futureDate} 
+                    onChange={generateTime}
+                />
+                {error && <p className="text-red-500">{error}</p>}
+                <div className='text-5xl font-bold mt-6 text-fuchsia-600'>
+                    {hrs && <span>{`${timeLeft.hours || '00'}:`}</span>}
+                    {min && <span>{`${timeLeft.minutes || '00'}:`}</span>}
+                    {sec &&<span>{`${timeLeft.seconds || '00'}`}</span>}
+                </div>
             </div>
         </section>
     )
